@@ -3,38 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connection Lost</title>
+    <title>Connection Offline</title>
     <style>
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #0f172a;
+            font-family: sans-serif;
+            background-color: #222;
+            color: white;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
             margin: 0;
-            user-select: none;
-            color: #ffffff;
+        }
+
+        /* Standard offline message layout */
+        .message-container {
             text-align: center;
+            margin-bottom: 40px;
         }
-        .card {
-            max-width: 500px;
-            padding: 40px;
-            background: #1e293b;
-            border-radius: 16px;
-            border: 1px solid #334155;
+
+        /* PIN Pad trigger button */
+        .admin-trigger {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: #444;
+            color: #aaa;
+            border: 1px solid #555;
+            border-radius: 4px;
+            cursor: pointer;
         }
-        h1 { color: #38bdf8; font-size: 2rem; margin-bottom: 10px; }
-        p { color: #94a3b8; line-height: 1.6; }
-        .code { font-family: monospace; color: #64748b; margin-top: 20px; font-size: 0.9rem; }
+
+        /* Hidden PIN Pad Overlay */
+        .pin-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .pin-display {
+            font-size: 32px;
+            margin-bottom: 20px;
+            letter-spacing: 5px;
+            height: 40px;
+        }
+
+        .pin-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 80px);
+            grid-gap: 15px;
+        }
+
+        .pin-btn {
+            width: 80px;
+            height: 80px;
+            font-size: 24px;
+            background: #333;
+            color: white;
+            border: 2px solid #555;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .pin-btn:active {
+            background: #555;
+        }
+
+        .action-btn {
+            background: #a00;
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>Connection Lost</h1>
-        <p>This terminal has lost connection to the local network interface. The system is attempting to reconnect automatically.</p>
-        <div class="code">ERROR_NET_DISCONNECT</div>
+
+    <div class="message-container">
+        <h1>Network Disconnected</h1>
+        <p>Please notify an attendant for assistance.</p>
     </div>
-    <script>document.addEventListener('contextmenu', e => e.preventDefault());</script>
+
+    <button class="admin-trigger" onclick="togglePinPad(true)">Admin Exit</button>
+
+    <div class="pin-overlay" id="pinOverlay">
+        <div class="pin-display" id="pinDisplay">****</div>
+        <div class="pin-grid">
+            <button class="pin-btn" onclick="pressKey('1')">1</button>
+            <button class="pin-btn" onclick="pressKey('2')">2</button>
+            <button class="pin-btn" onclick="pressKey('3')">3</button>
+            <button class="pin-btn" onclick="pressKey('4')">4</button>
+            <button class="pin-btn" onclick="pressKey('5')">5</button>
+            <button class="pin-btn" onclick="pressKey('6')">6</button>
+            <button class="pin-btn" onclick="pressKey('7')">7</button>
+            <button class="pin-btn" onclick="pressKey('8')">8</button>
+            <button class="pin-btn" onclick="pressKey('9')">9</button>
+            <button class="pin-btn action-btn" onclick="togglePinPad(false)">X</button>
+            <button class="pin-btn" onclick="pressKey('0')">0</button>
+            <button class="pin-btn action-btn" onclick="clearPin()">C</button>
+        </div>
+    </div>
+
+    <script>
+        // Set your desired PIN here
+        const CORRECT_PIN = "4445"; 
+        let currentInput = "";
+
+        function togglePinPad(show) {
+            document.getElementById('pinOverlay').style.display = show ? 'flex' : 'none';
+            clearPin();
+        }
+
+        function pressKey(num) {
+            if (currentInput.length < 4) {
+                currentInput += num;
+                updateDisplay();
+                
+                if (currentInput === CORRECT_PIN) {
+                    window.close();
+                } else if (currentInput.length === 4) {
+                    // Flash red or clear if wrong
+                    setTimeout(clearPin, 500);
+                }
+            }
+        }
+
+        function clearPin() {
+            currentInput = "";
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            let dots = "";
+            for(let i=0; i < currentInput.length; i++) {
+                dots += "●";
+            }
+            document.getElementById('pinDisplay').innerText = dots || "****";
+        }
+    </script>
 </body>
 </html>
