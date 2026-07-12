@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiosk Unavailable</title>
+    <style>
+        /* Matching Liquid-Dark Background */
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(-45deg, #0f0f11, #1e222b, #141416, #252830);
+            background-size: 400% 400%;
+            animation: gradientMove 15s ease infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            user-select: none;
+            overflow: hidden;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Frosted Glass Layout Overlay Container */
+        .container {
+            max-width: 600px;
+            padding: 40px;
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.6),
+                        inset 0 4px 4px 0 rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .icon-container {
+            margin-bottom: 24px;
+        }
+
+        /* Neon Alert Warning Icon */
+        .icon {
+            width: 80px;
+            height: 80px;
+            fill: none;
+            stroke: #ff4a4a;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 4px 12px rgba(255, 74, 74, 0.4));
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* Error Label Badge */
+        .error-badge {
+            display: inline-block;
+            background: rgba(255, 74, 74, 0.15);
+            border: 1px solid rgba(255, 74, 74, 0.3);
+            color: #ff6b6b;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="icon-container">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+        </div>
+        
+        <h1>Kiosk Unavailable</h1>
+        <p>This kiosk is unavailable at the moment. We apologize for the inconvenience. Maintenance staff have been notified.</p>
+        
+        <div class="error-badge">
+            ERROR CODE: B4XT1
+        </div>
+    </div>
+
+    <script>
+        // Disables right-clicks and long touch screen hold menus
+        document.addEventListener('contextmenu', event => event.preventDefault());
+    </script>
+</body>
+</html>
