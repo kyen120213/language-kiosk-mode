@@ -4,40 +4,49 @@ setlocal enabledelayedexpansion
 :: Configuration Paths
 set "ONLINE_URL=https://language-kiosk-mode.vercel.app/"
 set "OFFLINE_FILE=file:///C:/kiosk/offline.html"
-set "STATUS=online"
 set "CHROME_PATH=C:\Program Files\Google\Chrome\Application\chrome.exe"
 
-:loop
-:: Check network status by pinging Google DNS
+:: 1. FIRST LAUNCH: Start online normally
+start "" "%CHROME_PATH%" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%ONLINE_URL%"
+
+:online_monitor_loop
+:: Wait 3 seconds between network checks
+timeout /t 3 /nobreak >nul
+
+:: Check if the internet is still active
 ping -n 1 8.8.8.8 >nul 2>&1
 
 if errorlevel 1 (
-    :: Internet is DOWN
-    if "!STATUS!"=="online" (
-        taskkill /F /IM chrome.exe >nul 2>&1
-        timeout /t 1 /nobreak >nul
-        start "" "%CHROME_PATH%" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%OFFLINE_FILE%"
-        set "STATUS=offline"
-    )
-) else (
-    :: Internet is UP
-    if "!STATUS!"=="offline" (
-        taskkill /F /IM chrome.exe >nul 2>&1
-        timeout /t 1 /nobreak >nul
-        start "" "%CHROME_PATH%" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%ONLINE_URL%"
-        set "STATUS=online"
-    )
+    :: INTERNET DROPPED: Jump completely out of this loop to the offline logic
+    goto go_offline
 )
 
-:: Safety double-check to make sure Chrome is always running something
+:: Safety check: If they are online but Chrome crashed/closed, reopen the online site
 tasklist /FI "IMAGENAME eq chrome.exe" | findstr /I "chrome.exe" >nul
 if errorlevel 1 (
-    if "!STATUS!"=="online" (
-        start "" "%CHROME_PATH%" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%ONLINE_URL%"
-    ) else (
-        start "" "%CHROME_PATH%" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%OFFLINE_FILE%"
-    )
+    start "" "%CHROME_PATH%" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%ONLINE_URL%"
 )
 
+:: Continue monitoring while online
+goto online_monitor_loop
+
+
+:go_offline
+:: Force close the online/dinosaur instance immediately
+taskkill /F /IM chrome.exe >nul 2>&1
+timeout /t 1 /nobreak >nul
+
+:: Launch the local offline file
+start "" "%CHROME_PATH%" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%OFFLINE_FILE%"
+
+:offline_lock_loop
+:: Lock phase: We never ping the internet again. 
+:: We only check if Chrome gets closed, to bring the offline page back up.
 timeout /t 3 /nobreak >nul
-goto loop
+
+tasklist /FI "IMAGENAME eq chrome.exe" | findstr /I "chrome.exe" >nul
+if errorlevel 1 (
+    start "" "%CHROME_PATH%" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%OFFLINE_FILE%"
+)
+
+goto offline_lock_loop
