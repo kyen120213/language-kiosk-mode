@@ -5,9 +5,7 @@ setlocal enabledelayedexpansion
 set "ONLINE_URL=https://language-kiosk-mode.vercel.app/"
 set "OFFLINE_FILE=file:///C:/kiosk/offline.html"
 set "STATUS=online"
-
-:: Move inside the official Chrome directory to prevent index page bugs
-cd /d "C:\Program Files\Google\Chrome\Application"
+set "CHROME_PATH=C:\Program Files\Google\Chrome\Application\chrome.exe"
 
 :loop
 :: Check network status by pinging Google DNS
@@ -18,7 +16,7 @@ if errorlevel 1 (
     if "!STATUS!"=="online" (
         taskkill /F /IM chrome.exe >nul 2>&1
         timeout /t 1 /nobreak >nul
-        start "" "chrome.exe" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%OFFLINE_FILE%"
+        start "" "%CHROME_PATH%" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%OFFLINE_FILE%"
         set "STATUS=offline"
     )
 ) else (
@@ -26,7 +24,7 @@ if errorlevel 1 (
     if "!STATUS!"=="offline" (
         taskkill /F /IM chrome.exe >nul 2>&1
         timeout /t 1 /nobreak >nul
-        start "" "chrome.exe" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%ONLINE_URL%"
+        start "" "%CHROME_PATH%" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%ONLINE_URL%"
         set "STATUS=online"
     )
 )
@@ -35,9 +33,9 @@ if errorlevel 1 (
 tasklist /FI "IMAGENAME eq chrome.exe" | findstr /I "chrome.exe" >nul
 if errorlevel 1 (
     if "!STATUS!"=="online" (
-        start "" "chrome.exe" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%ONLINE_URL%"
+        start "" "%CHROME_PATH%" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%ONLINE_URL%"
     ) else (
-        start "" "chrome.exe" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%OFFLINE_FILE%"
+        start "" "%CHROME_PATH%" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%OFFLINE_FILE%"
     )
 )
 
