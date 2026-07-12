@@ -1,52 +1,49 @@
 @echo off
 setlocal enabledelayedexpansion
 
-:: Configuration Paths
+:: ==========================================
+:: KIOSK SYSTEM CONFIGURATION
+:: ==========================================
 set "ONLINE_URL=https://language-kiosk-mode.vercel.app/"
 set "OFFLINE_FILE=file:///C:/kiosk/offline.html"
 set "CHROME_PATH=C:\Program Files\Google\Chrome\Application\chrome.exe"
 
-:: 1. FIRST LAUNCH: Start online normally
-start "" "%CHROME_PATH%" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%ONLINE_URL%"
+:: 1. FIRST LAUNCH: Start online view normally
+start "" "%CHROME_PATH%" --kiosk --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%ONLINE_URL%"
 
 :online_monitor_loop
 :: Wait 3 seconds between network checks
 timeout /t 3 /nobreak >nul
 
-:: Check if the internet is still active
+:: Check if the internet connection is still live
 ping -n 1 8.8.8.8 >nul 2>&1
 
 if errorlevel 1 (
-    :: INTERNET DROPPED: Jump completely out of this loop to the offline logic
+    :: NETWORK DOWN: Immediately exit this loop and switch to the offline logic
     goto go_offline
 )
 
-:: Safety check: If they are online but Chrome crashed/closed, reopen the online site
+:: Safety Net: If online but Chrome is accidentally closed, reopen it
 tasklist /FI "IMAGENAME eq chrome.exe" | findstr /I "chrome.exe" >nul
 if errorlevel 1 (
-    start "" "%CHROME_PATH%" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%ONLINE_URL%"
+    start "" "%CHROME_PATH%" --kiosk --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%ONLINE_URL%"
 )
 
-:: Continue monitoring while online
+:: Maintain the active online monitoring cycle
 goto online_monitor_loop
 
 
 :go_offline
-:: Force close the online/dinosaur instance immediately
+:: Forcefully terminate the online/dinosaur instance to prevent layout flashes
 taskkill /F /IM chrome.exe >nul 2>&1
 timeout /t 1 /nobreak >nul
 
-:: Launch the local offline file
-start "" "%CHROME_PATH%" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%OFFLINE_FILE%"
+:: Launch the local offline PIN pad page
+start "" "%CHROME_PATH%" --kiosk --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%OFFLINE_FILE%"
 
 :offline_lock_loop
-:: Lock phase: We never ping the internet again. 
-:: We only check if Chrome gets closed, to bring the offline page back up.
+:: PERMANENT LOCK PHASE: We never ping the network again.
+:: The relaunch safety net is removed here so that when your HTML PIN pad 
+:: executes window.close(), Chrome shuts down and stays down.
 timeout /t 3 /nobreak >nul
-
-tasklist /FI "IMAGENAME eq chrome.exe" | findstr /I "chrome.exe" >nul
-if errorlevel 1 (
-    start "" "%CHROME_PATH%" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts --disk-cache-size=1 --media-cache-size=1 "%OFFLINE_FILE%"
-)
-
 goto offline_lock_loop
