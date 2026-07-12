@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Critical System Error</title>
+    <style>
+        /* Stark Minimalistic Terminal Blackout Background */
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #09090b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            user-select: none;
+            overflow: hidden;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        /* Glitchy High-Severity Danger Border Interface Box */
+        .error-card {
+            max-width: 580px;
+            padding: 45px 35px;
+            border-radius: 16px;
+            background: rgba(18, 18, 22, 0.7);
+            border: 2px solid #dc2626;
+            box-shadow: 0 0 30px rgba(220, 38, 38, 0.15),
+                        inset 0 0 20px rgba(220, 38, 38, 0.05);
+            position: relative;
+        }
+
+        /* Industrial Hazard Ribbon Accent Line */
+        .error-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: repeating-linear-gradient(
+                -45deg,
+                #dc2626,
+                #dc2626 10px,
+                #09090b 10px,
+                #09090b 20px
+            );
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+        }
+
+        .icon-shield {
+            margin-bottom: 24px;
+        }
+
+        /* High-Intensity Emergency Red Icon Accent */
+        .icon {
+            width: 75px;
+            height: 75px;
+            fill: none;
+            stroke: #dc2626;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 15px rgba(220, 38, 38, 0.6));
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            color: #ef4444;
+            margin: 0 0 16px 0;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        p {
+            font-size: 1.15rem;
+            color: #d1d5db;
+            line-height: 1.6;
+            margin: 0 0 32px 0;
+            font-weight: 400;
+        }
+
+        /* Command Line Console Style Debug Wrapper */
+        .system-log-box {
+            background: #040405;
+            border: 1px solid #27272a;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: left;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+            color: #a1a1aa;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.8);
+        }
+
+        .log-label {
+            color: #71717a;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+            font-weight: bold;
+        }
+
+        .log-text {
+            color: #f87171;
+            word-break: break-word;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="error-card">
+        <div class="icon-shield">
+            <svg class="icon" viewBox="0 0 24 24">
+                <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+        </div>
+        
+        <h1>System Fault</h1>
+        <p>This Kiosk has experienced a critical error to some of the system files and needs to be serviced right away. Please tell a staff member.</p>
+        
+        <div class="system-log-box">
+            <div class="log-label">Diagnostic String</div>
+            <div class="log-text">STATUS_CRITICAL_HALT: Windows System Files Updated Or Modified</div>
+        </div>
+    </div>
+
+    <script>
+        // Disables right-clicks and long touch screen hold menus
+        document.addEventListener('contextmenu', event => event.preventDefault());
+    </script>
+</body>
+</html>
