@@ -6,17 +6,19 @@ set "ONLINE_URL=https://language-kiosk-mode.vercel.app/"
 set "OFFLINE_FILE=C:\kiosk\offline.html"
 
 :loop
-:: Check network status by pinging a reliable server (Google DNS)
+:: Check network status by pinging a reliable server
 ping -n 1 8.8.8.8 >nul 2>&1
 
 if errorlevel 1 (
-    :: No internet connection - check if Chrome is already showing the offline page
+    :: Internet is DOWN
+    :: If Chrome is not already showing the offline file, launch it
     tasklist /FI "IMAGENAME eq chrome.exe" | findstr /I "chrome.exe" >nul
     if errorlevel 1 (
         start "" "chrome.exe" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts "%OFFLINE_FILE%"
     )
 ) else (
-    :: Internet is active - launch the live kiosk site if it isn't running
+    :: Internet is UP
+    :: If Chrome is closed or showing the offline file, launch the live site
     tasklist /FI "IMAGENAME eq chrome.exe" | findstr /I "chrome.exe" >nul
     if errorlevel 1 (
         start "" "chrome.exe" --kiosk --incognito --disable-popup-blocking --disable-desktop-notifications --deny-permission-prompts "%ONLINE_URL%"
