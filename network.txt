@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connection Lost</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            user-select: none;
+            color: #ffffff;
+            text-align: center;
+        }
+        .card {
+            max-width: 500px;
+            padding: 40px;
+            background: #1e293b;
+            border-radius: 16px;
+            border: 1px solid #334155;
+        }
+        h1 { color: #38bdf8; font-size: 2rem; margin-bottom: 10px; }
+        p { color: #94a3b8; line-height: 1.6; }
+        .code { font-family: monospace; color: #64748b; margin-top: 20px; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Connection Lost</h1>
+        <p>This terminal has lost connection to the local network interface. The system is attempting to reconnect automatically.</p>
+        <div class="code">ERROR_NET_DISCONNECT</div>
+    </div>
+    <script>document.addEventListener('contextmenu', e => e.preventDefault());</script>
+</body>
+</html>
