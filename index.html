@@ -8,7 +8,7 @@
         /* Moving Dark Gradient Background */
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(-45deg, #111111, #2c3e50, #1c1c1c, #34495e);
+            background: linear-gradient(-45deg, #0f0f11, #242d38, #141416, #2c3a47);
             background-size: 400% 400%;
             animation: gradientMove 15s ease infinite;
             display: flex;
@@ -28,10 +28,10 @@
         }
 
         h1 {
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.95);
             margin-bottom: 40px;
             font-size: 3rem;
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
             font-weight: 600;
             letter-spacing: 1px;
         }
@@ -53,12 +53,12 @@
             padding: 40px 20px;
             text-decoration: none;
             border-radius: 24px;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37),
-                        inset 0 4px 4px 0 rgba(255, 255, 255, 0.2),
-                        inset 0 -4px 12px 0 rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5),
+                        inset 0 4px 4px 0 rgba(255, 255, 255, 0.15),
+                        inset 0 -4px 12px 0 rgba(0, 0, 0, 0.3);
             transition: transform 0.1s, box-shadow 0.2s;
             -webkit-tap-highlight-color: transparent;
             position: relative;
@@ -73,39 +73,40 @@
             left: 0;
             right: 0;
             height: 50%;
-            background: linear-gradient(rgba(255,255,255,0.15), rgba(255,255,255,0));
+            background: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0));
             pointer-events: none;
         }
 
         .button:active {
             transform: scale(0.96);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5), inset 0 2px 2px rgba(255,255,255,0.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.6), inset 0 2px 2px rgba(255,255,255,0.05);
         }
 
-        /* Specific Liquid Tint Colors */
-        .mcdonalds { background: rgba(218, 41, 28, 0.25); }
-        .kfc { background: rgba(163, 8, 12, 0.25); }
-        .dominos { background: rgba(0, 100, 145, 0.25); }
-        .other { background: rgba(255, 255, 255, 0.1); }
+        /* Liquid Tint Translucency */
+        .mcdonalds { background: rgba(218, 41, 28, 0.22); }
+        .kfc { background: rgba(163, 8, 12, 0.22); }
+        .dominos { background: rgba(0, 100, 145, 0.22); }
+        .other { background: rgba(255, 255, 255, 0.08); }
 
-        /* Brand Logos & Layout */
+        /* Official Image Brand Logos */
         .logo {
-            width: 70px;
-            height: 70px;
-            margin-bottom: 15px;
+            width: 75px;
+            height: 75px;
+            margin-bottom: 20px;
             object-fit: contain;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
         }
 
         .button-text {
             font-size: 1.6rem;
             font-weight: bold;
             color: #ffffff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.7);
         }
         
         .other .button-text {
             font-size: 1.8rem;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -115,27 +116,22 @@
 
     <div class="grid">
         <a href="https://www.mcdonalds.com" target="_self" class="button mcdonalds">
-            <svg class="logo" viewBox="0 0 24 24" fill="#FFC72C">
-                <path d="M12 21c-.4 0-.7-.3-.7-.7V9.5c0-1.2-.8-2.1-1.9-2.1-1 0-1.8.9-1.8 2.1v10.8c0 .4-.3.7-.7.7s-.7-.3-.7-.7V9.5c0-2 1.5-3.5 3.3-3.5 1.4 0 2.6.9 3.1 2.2.5-1.3 1.7-2.2 3.1-2.2 1.8 0 3.3 1.5 3.3 3.5v10.8c0 .4-.3.7-.7.7s-.7-.3-.7-.7V9.5c0-1.2-.8-2.1-1.8-2.1-1.1 0-1.9.9-1.9 2.1v10.8c0 .4-.3.7-.8.7zM4.1 21c-.4 0-.7-.3-.7-.7V9.5C3.4 5.4 6.5 2.1 10.4 2c.4 0 .7.3.7.7s-.3.7-.7.7C7.2 3.5 4.8 6.2 4.8 9.5v10.8c0 .4-.3.7-.7.7zm15.8 0c-.4 0-.7-.3-.7-.7V9.5c0-3.3-2.4-6-5.6-6.1-.4 0-.7-.3-.7-.7s.3-.7.7-.7c3.9.1 7 3.4 7 7.5v10.8c0 .4-.3.7-.7.7z"/>
-            </svg>
+            <img class="logo" src="https://cdn.simpleicons.org/mcdonalds/%23FFC72C" alt="McDonald's Logo">
             <span class="button-text">McDonald's</span>
         </a>
 
         <a href="https://www.kfc.com" target="_self" class="button kfc">
-            <svg class="logo" viewBox="0 0 24 24" fill="#ffffff">
-                <path d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm-3.5 6c-.83 0-1.5.67-1.5 1.5S7.67 11 8.5 11s1.5-.67 1.5-1.5S9.33 8 8.5 8zm7 0c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5S16.33 8 17.5 8zm-3.5 4.5c-2.33 0-4.31 1.46-5.11 3.5h10.22c-.8-2.04-2.78-3.5-5.11-3.5z"/>
-            </svg>
+            <img class="logo" src="https://cdn.simpleicons.org/kfc/%23E4002B" alt="KFC Logo">
             <span class="button-text">KFC</span>
         </a>
 
         <a href="https://www.dominos.com" target="_self" class="button dominos">
-            <svg class="logo" viewBox="0 0 24 24" fill="#006491">
-                <path d="M8.7 1.7L1.7 8.7c-.4.4-.4 1 0 1.4l13.6 13.6c.4.4 1 .4 1.4 0l7-7c.4-.4.4-1 0-1.4L10.1 1.7c-.4-.4-1-.4-1.4 0zm1.7 18.2c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm6.5-6.5c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm0 6.5c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5z"/>
-            </svg>
+            <img class="logo" src="https://cdn.simpleicons.org/dominos/%23006491" alt="Domino's Logo">
             <span class="button-text">Domino's</span>
         </a>
 
         <a href="https://www.google.com" target="_self" class="button other">
+            <img class="logo" src="https://cdn.simpleicons.org/google/white" alt="Google Logo">
             <span class="button-text">Other Places</span>
         </a>
     </div>
