@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiosk Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            user-select: none; /* Prevents text selection on touchscreen */
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            width: 90%;
+            max-width: 600px;
+        }
+        .button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.1s;
+            -webkit-tap-highlight-color: transparent; /* Removes flash on touchscreen tap */
+        }
+        .button:active {
+            transform: scale(0.95);
+        }
+        .mcdonalds { background-color: #DA291C; }
+        .kfc { background-color: #A3080C; }
+        .dominos { background-color: #006491; }
+        .other { background-color: #4285F4; }
+    </style>
+</head>
+<body>
+
+    <h1>Select a Place</h1>
+
+    <div class="grid">
+        <a href="https://www.mcdonalds.com" target="_self" class="button mcdonalds">McDonald's</a>
+        <a href="https://www.kfc.com" target="_self" class="button kfc">KFC</a>
+        <a href="https://www.dominos.com" target="_self" class="button dominos">Domino's</a>
+        <a href="https://www.google.com" target="_self" class="button other">Other Places</a>
+    </div>
+
+</body>
+</html>
